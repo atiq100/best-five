@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap');
+.heading-text{
+    font-family: 'Berkshire Swash', cursive;
+    text-transform: capitalize;
+    color: #FF5E19;
+
+}
+.position-relative{
+    top:22.8%;
+}
+.position{
+    position: relative;
+    top:5.3%;
+    left: 40%;
+}
