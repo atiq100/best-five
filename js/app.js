@@ -53,22 +53,30 @@ function getValue(element){
     return expenseValue;
     
 }
+function getTextValue(element){
+    const getTextElement = document.getElementById(element);
+    const textValue = parseInt(getTextElement.innerText);
+    return textValue;
+}
 function setValue(element,value){
     const setExpenses = document.getElementById(element);
     setExpenses.innerText = value;
    
 }
 document.getElementById('btn-calculate').addEventListener('click',function(){
-    const totalPlayers = document.getElementById("total-player");
-    const totalPlayersNumber = totalPlayers.innerText;
 
+    const totalPlayersNumber = getTextValue('total-player')
     const perPlayerExpenses = getValue('per-player-expense');
     const totalPlayerExpenses = perPlayerExpenses * totalPlayersNumber;
     setValue('expenses',totalPlayerExpenses);
    
 });
 document.getElementById('btn-total').addEventListener('click',function(){
-    
+    const managerCost = getValue('manager-expense');
+    const coachCost = getValue('coach-expense');
+    const totalPlayerExpense = getTextValue('expenses');
+    const totalCost = totalPlayerExpense + managerCost + coachCost;
+    setValue('total-cost',totalCost);
 })
 
 function addToCart(element) {
