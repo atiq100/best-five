@@ -1,33 +1,27 @@
 
 const cart = [];
-//button disabled after select
-const boxes = document.getElementsByClassName('select-btn')
-    for (let box of boxes) {
-        box.addEventListener('click', function onClick() {
-            this.disabled = true;
-        });
-      }
+displayPlayer(cart);
 
-function displayPlayer(cartPlayer)
-{
-    if(cartPlayer.length>5){
-        alert('can not add more than 5 players!');
-        //this.disabled = false;
-        return;
-    }
-    //let totalPrice = 0;
-    //total added products
+function displayPlayer(cartPlayer){
+
+const cartContainer = document.getElementById("player-cart");
+if(cart.length > 5){
+    alert("You Can not Select More Than 5 Players!!!");
+
+    return cartPlayer.removeAttribute('disabled');
+}
+
+
      const totalPlayers = document.getElementById("total-player");
      totalPlayers.innerText = cart.length;
 
-    const cartContainer = document.getElementById("player-cart");
-    cartContainer.innerHTML = '';
+     cartContainer.innerHTML = '';
+    
 
-    for(let i = 0; i < cartPlayer.length; i++)
+    for(let i = 0; i < cart.length; i++)
     {
         const name = cart[i].playerName
        
-         // totalPrice = totalPrice + price;
         const tr = document.createElement("tr");
         tr.innerHTML = `
         <th>${i+1}</th>
@@ -36,16 +30,23 @@ function displayPlayer(cartPlayer)
         `;
         cartContainer.appendChild(tr);
     }
-
-    // const tr = document.createElement('tr');
-    // tr.innerHTML = `
-    // <th></th>
-    // <td>Total Price</td>
-    // <td>${totalPrice}</td>
-    // `;
-
-    // cartContainer.appendChild(tr);
+   
 }
+
+function addToCart(element) {
+    const button = element;
+    button.setAttribute('disabled', 'ture');
+    const playerName = element.parentNode.parentNode.children[0].innerText;
+    
+    const players = {
+        playerName: playerName,   
+    }
+    
+    cart.push(players);
+    displayPlayer(button);
+}
+
+//get input value from user
 function getValue(element){
     const playerExpenseField = document.getElementById(element);
     const expenseValue = parseInt(playerExpenseField.value);
@@ -53,16 +54,19 @@ function getValue(element){
     return expenseValue;
     
 }
+//get textField value
 function getTextValue(element){
     const getTextElement = document.getElementById(element);
     const textValue = parseInt(getTextElement.innerText);
     return textValue;
 }
+// set the value in text field
 function setValue(element,value){
     const setExpenses = document.getElementById(element);
     setExpenses.innerText = value;
    
 }
+//calculate total player expenses
 document.getElementById('btn-calculate').addEventListener('click',function(){
 
     const totalPlayersNumber = getTextValue('total-player')
@@ -71,6 +75,7 @@ document.getElementById('btn-calculate').addEventListener('click',function(){
     setValue('expenses',totalPlayerExpenses);
    
 });
+//calculate total cost
 document.getElementById('btn-total').addEventListener('click',function(){
     const managerCost = getValue('manager-expense');
     const coachCost = getValue('coach-expense');
@@ -79,13 +84,3 @@ document.getElementById('btn-total').addEventListener('click',function(){
     setValue('total-cost',totalCost);
 })
 
-function addToCart(element) {
-    const playerName = element.parentNode.parentNode.children[0].innerText;
-    
-    const players = {
-        playerName: playerName,   
-    }
-    
-    cart.push(players);
-    displayPlayer(cart);
-}
